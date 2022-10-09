@@ -1,7 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { useState, useEffect } from "react";
+
+function useTimeDisplay() {
+  const [mysec, setMySec] = useState("");
+  useEffect(() => {
+    setInterval(() => {
+      const date = new Date();
+      setMySec(date.getSeconds().toString());
+    }, 1000);
+  }, []);
+  return <h1 className="timeDisplay">{mysec}</h1>;
+}
 
 function App() {
+  const timeDisplay = useTimeDisplay();
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +30,7 @@ function App() {
         >
           Learn React
         </a>
+        {timeDisplay}
       </header>
     </div>
   );
