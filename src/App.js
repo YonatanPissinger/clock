@@ -1,20 +1,33 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect } from "react";
+import Axios from "axios";
 
 function useTimeDisplay() {
   const [mysec, setMySec] = useState("");
   useEffect(() => {
     setInterval(() => {
-      const date = new Date();
-      setMySec(date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString());
+      Axios.get("/api/time").then((response) => {
+        setMySec(response.data.message);
+      });
     }, 1000);
   }, []);
   return <h1 className="timeDisplay">{mysec}</h1>;
 }
 
+function useApi() {
+  const [response, setResponse] = useState("loading...");
+  useEffect(() => {
+    Axios.get("/api/yonatan").then((response) => {
+      setResponse(response.data.message);
+    });
+  }, []);
+  return <p className="api">{response}</p>;
+}
+
 function App() {
   const timeDisplay = useTimeDisplay();
+  const api = useApi();
   return (
     <div className="App">
       <header className="App-header">
@@ -31,6 +44,7 @@ function App() {
           Learn React
         </a>
         {timeDisplay}
+        {api}
       </header>
     </div>
   );
