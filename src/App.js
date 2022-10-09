@@ -7,7 +7,7 @@ function useTimeDisplay() {
   useEffect(() => {
     setInterval(() => {
       const date = new Date();
-      setMySec(date.getSeconds().toString());
+      setMySec(date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString());
     }, 1000);
   }, []);
   return <h1 className="timeDisplay">{mysec}</h1>;
